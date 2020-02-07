@@ -13,12 +13,10 @@ class HigherLowerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_higher_lower)
-        btnLower.setOnClickListener {onLowerClick()}
-        btnEqual.setOnClickListener {onEqualClick()}
-        btnHigher.setOnClickListener {onHigherClick()}
         initViews()
     }
 
+    //  Updates image and text
     private fun updateUI() {
         TvLastThrow.text = getString(R.string.last_throw, lastThrow)
 
@@ -32,34 +30,44 @@ class HigherLowerActivity : AppCompatActivity() {
         }
     }
 
+    //  Gets called when app gets launched
     private fun initViews() {
+        btnLower.setOnClickListener { onLowerClick() }
+        btnEqual.setOnClickListener { onEqualClick() }
+        btnHigher.setOnClickListener { onHigherClick() }
         updateUI()
     }
 
+    //  Sets the current value to the last one and rolls a new number
     private fun rollDice() {
         lastThrow = currentThrow
         currentThrow = (1..6).random()
         updateUI()
     }
 
+    //  Shows toast if answer is correct
     private fun onAnswerCorrect() {
         Toast.makeText(this, R.string.correct, Toast.LENGTH_SHORT).show()
     }
 
+    //  Shows toast if answer is incorrect
     private fun onAnswerIncorrect() {
         Toast.makeText(this, R.string.incorrect, Toast.LENGTH_SHORT).show()
     }
 
+    //  Checks if number is lower than the last one
     private fun onLowerClick() {
         rollDice()
         if (currentThrow < lastThrow) onAnswerCorrect() else onAnswerIncorrect()
     }
 
+    //  Check if number is equal to the last one
     private fun onEqualClick() {
         rollDice()
         if (currentThrow == lastThrow) onAnswerCorrect() else onAnswerIncorrect()
     }
 
+    //  Checks if number is higher than the last one
     private fun onHigherClick() {
         rollDice()
         if (currentThrow > lastThrow) onAnswerCorrect() else onAnswerIncorrect()

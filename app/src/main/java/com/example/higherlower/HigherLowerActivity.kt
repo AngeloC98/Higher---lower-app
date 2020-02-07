@@ -2,6 +2,7 @@ package com.example.higherlower
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_higher_lower.*
 
 class HigherLowerActivity : AppCompatActivity() {
@@ -12,6 +13,9 @@ class HigherLowerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_higher_lower)
+        btnLower.setOnClickListener {onLowerClick()}
+        btnEqual.setOnClickListener {onEqualClick()}
+        btnHigher.setOnClickListener {onHigherClick()}
         initViews()
     }
 
@@ -36,5 +40,28 @@ class HigherLowerActivity : AppCompatActivity() {
         lastThrow = currentThrow
         currentThrow = (1..6).random()
         updateUI()
+    }
+
+    private fun onAnswerCorrect() {
+        Toast.makeText(this, R.string.correct, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onAnswerIncorrect() {
+        Toast.makeText(this, R.string.incorrect, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onLowerClick() {
+        rollDice()
+        if (currentThrow < lastThrow) onAnswerCorrect() else onAnswerIncorrect()
+    }
+
+    private fun onEqualClick() {
+        rollDice()
+        if (currentThrow == lastThrow) onAnswerCorrect() else onAnswerIncorrect()
+    }
+
+    private fun onHigherClick() {
+        rollDice()
+        if (currentThrow > lastThrow) onAnswerCorrect() else onAnswerIncorrect()
     }
 }
